@@ -1,10 +1,10 @@
-# Tugas Akhir PBO: Aplikasi CRUD Spring
+# Aplikasi CRUD Manajamen Mahasiswa dengan Java Spring Boot
 
-Ini adalah repositori untuk proyek tugas akhir mata kuliah **Pemrograman Berorientasi Objek (PBO)**. Proyek ini merupakan aplikasi web sederhana berbasis Java yang mengimplementasikan operasi dasar **CRUD (Create, Read, Update, Delete)** menggunakan **Spring Framework** dan dikelola oleh **Maven**.
+Proyek ini merupakan aplikasi web sederhana berbasis Java yang mengimplementasikan operasi dasar **CRUD (Create, Read, Update, Delete)** menggunakan **Spring Framework** dan dikelola oleh **Maven**.
 
 ## 📝 Deskripsi Proyek
 
-Aplikasi ini dibangun sebagai syarat kelulusan mata kuliah PBO. Tujuannya adalah untuk mendemonstrasikan pemahaman konsep OOP dan penerapannya dalam membangun aplikasi backend fungsional dengan studi kasus manajemen data sederhana.
+Tujuannya adalah untuk mendemonstrasikan pemahaman konsep OOP dan penerapannya dalam membangun aplikasi backend fungsional dengan studi kasus manajemen data sederhana.
 
 ## ✨ Fitur Utama
 
