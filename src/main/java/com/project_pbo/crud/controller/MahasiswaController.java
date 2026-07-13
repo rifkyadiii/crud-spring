@@ -39,7 +39,7 @@ public class MahasiswaController {
         }
     }
 
-    @PutMapping("update/mahasiswa")
+    @PutMapping("/update/mahasiswa")
     public Mahasiswa updateMahasiswa(@RequestBody Mahasiswa mahasiswa){
         return mahasiswaService.updateMahasiswa(mahasiswa);
     }
