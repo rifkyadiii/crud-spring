@@ -33,7 +33,7 @@ public class Mahasiswa {
         return mahasiswaNim;
     }
 
-    public void setMahasiswaNIM(String mahasiswaNim) {
+    public void setMahasiswaNim(String mahasiswaNim) {
         this.mahasiswaNim = mahasiswaNim;
     }
 
