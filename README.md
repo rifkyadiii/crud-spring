@@ -49,4 +49,4 @@ Aplikasi ini dibangun sebagai syarat kelulusan mata kuliah PBO. Tujuannya adalah
         ```bash
         mvnw.cmd spring-boot:run
         ```
-5.  Aplikasi akan berjalan dan dapat diakses melalui browser di alamat `http://localhost:8080`.
+5.  Aplikasi akan berjalan dan dapat diakses melalui browser di alamat `http://localhost:9090`.
