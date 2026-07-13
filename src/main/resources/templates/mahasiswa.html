@@ -1,39 +1,420 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Manajemen Mahasiswa</title>
+
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
 
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+
+    <style>
+        :root{
+            --ink:#16213D;
+            --ink-2:#0F1626;
+            --paper:#F5F3ED;
+            --card:#FFFFFF;
+            --gold:#C69A3B;
+            --gold-deep:#A87F28;
+            --forest:#3D5C46;
+            --forest-tint:#E4EBE4;
+            --clay:#A34638;
+            --clay-tint:#F3E3E0;
+            --slate:#5B6472;
+            --line:#E4E0D5;
+            --radius:10px;
+        }
+
+        *{ box-sizing:border-box; }
+
+        body{
+            background:
+                radial-gradient(1200px 600px at 90% -10%, rgba(198,154,59,0.07), transparent 60%),
+                var(--paper);
+            font-family:'Inter', -apple-system, sans-serif;
+            color:var(--ink-2);
+            min-height:100vh;
+            padding-bottom:60px;
+        }
+
+        @media (prefers-reduced-motion: reduce){
+            *{ animation-duration:0.001ms !important; transition-duration:0.001ms !important; }
+        }
+
+        /* ---------- Header ---------- */
+        .masthead{
+            background:linear-gradient(180deg, var(--ink) 0%, var(--ink-2) 100%);
+            border-bottom:3px solid var(--gold);
+            padding:22px 0;
+            margin-bottom:34px;
+            box-shadow:0 8px 24px -12px rgba(15,22,38,0.5);
+        }
+        .masthead-inner{
+            max-width:1140px;
+            margin:0 auto;
+            padding:0 24px;
+            display:flex;
+            align-items:center;
+            justify-content:space-between;
+            flex-wrap:wrap;
+            gap:16px;
+        }
+        .brand{ display:flex; align-items:center; gap:16px; }
+        .brand-seal{
+            width:46px; height:46px; flex:0 0 auto;
+            border-radius:50%;
+            border:1.5px solid var(--gold);
+            display:flex; align-items:center; justify-content:center;
+            color:var(--gold);
+            font-family:'Fraunces', serif;
+            font-weight:600;
+            font-size:17px;
+            background:rgba(198,154,59,0.08);
+        }
+        .brand-text h1{
+            font-family:'Fraunces', serif;
+            font-weight:600;
+            font-size:26px;
+            color:#F7F5EF;
+            margin:0;
+            letter-spacing:0.2px;
+        }
+        .brand-text p{
+            margin:2px 0 0;
+            font-size:12.5px;
+            color:#AEB6C4;
+            letter-spacing:0.3px;
+        }
+        .header-actions{ display:flex; align-items:center; gap:14px; }
+        .stat-chip{
+            display:flex; flex-direction:column; align-items:flex-end;
+            padding:6px 16px;
+            border-left:1px solid rgba(255,255,255,0.15);
+        }
+        .stat-chip .num{
+            font-family:'IBM Plex Mono', monospace;
+            color:var(--gold);
+            font-size:20px;
+            font-weight:600;
+            line-height:1;
+        }
+        .stat-chip .label{
+            font-size:10.5px;
+            color:#9AA3B2;
+            text-transform:uppercase;
+            letter-spacing:0.08em;
+            margin-top:3px;
+        }
+        .btn-ghost-gold{
+            background:transparent;
+            border:1px solid rgba(198,154,59,0.55);
+            color:var(--gold);
+            font-size:13.5px;
+            font-weight:600;
+            padding:9px 16px;
+            border-radius:7px;
+            transition:all .15s ease;
+        }
+        .btn-ghost-gold:hover{
+            background:rgba(198,154,59,0.12);
+            color:var(--gold);
+        }
+
+        /* ---------- Container ---------- */
+        .container{ max-width:1140px; }
+
+        .toolbar{
+            display:flex;
+            align-items:center;
+            justify-content:space-between;
+            margin-bottom:18px;
+            flex-wrap:wrap;
+            gap:12px;
+        }
+        .toolbar h2{
+            font-family:'Fraunces', serif;
+            font-size:19px;
+            font-weight:600;
+            color:var(--ink-2);
+            margin:0;
+        }
+        .toolbar h2 span{
+            display:block;
+            font-family:'Inter',sans-serif;
+            font-weight:400;
+            font-size:12.5px;
+            color:var(--slate);
+            margin-top:2px;
+        }
+
+        .btn-gold{
+            background:var(--gold);
+            border:1px solid var(--gold-deep);
+            color:#241A05;
+            font-weight:600;
+            font-size:14px;
+            padding:10px 20px;
+            border-radius:7px;
+            transition:transform .12s ease, box-shadow .12s ease, background .12s ease;
+            box-shadow:0 3px 0 var(--gold-deep);
+        }
+        .btn-gold:hover{
+            background:#D4A845;
+            color:#241A05;
+            transform:translateY(-1px);
+        }
+        .btn-gold:active{
+            transform:translateY(1px);
+            box-shadow:0 1px 0 var(--gold-deep);
+        }
+
+        /* ---------- Table card ---------- */
+        .ledger-card{
+            background:var(--card);
+            border:1px solid var(--line);
+            border-radius:var(--radius);
+            box-shadow:0 12px 30px -18px rgba(20,25,40,0.25);
+            padding:6px 22px 22px;
+            animation:riseIn .45s ease both;
+        }
+        @keyframes riseIn{
+            from{ opacity:0; transform:translateY(10px); }
+            to{ opacity:1; transform:translateY(0); }
+        }
+
+        table.dataTable{ border-collapse:separate !important; border-spacing:0; }
+        table.dataTable thead th{
+            background:var(--ink);
+            color:#EFE6CE !important;
+            font-size:11px;
+            text-transform:uppercase;
+            letter-spacing:0.07em;
+            font-weight:600;
+            border:none !important;
+            padding:14px 12px !important;
+        }
+        table.dataTable thead th:first-child{ border-top-left-radius:8px; }
+        table.dataTable thead th:last-child{ border-top-right-radius:8px; }
+        table.dataTable tbody td{
+            font-size:13.6px;
+            color:var(--ink-2);
+            padding:13px 12px !important;
+            border-bottom:1px solid var(--line) !important;
+            vertical-align:middle;
+        }
+        table.dataTable tbody tr:hover{ background:#FBF9F3; }
+        table.dataTable tbody tr:last-child td{ border-bottom:none !important; }
+
+        .nim-badge{
+            font-family:'IBM Plex Mono', monospace;
+            font-size:12.5px;
+            font-weight:600;
+            background:#F0EEE6;
+            border:1px solid var(--line);
+            color:var(--ink);
+            padding:4px 9px;
+            border-radius:6px;
+            letter-spacing:0.02em;
+        }
+        .name-cell{ font-weight:600; color:var(--ink-2); }
+
+        .gender-tag{ display:inline-flex; align-items:center; gap:7px; font-size:13px; }
+        .gender-dot{ width:8px; height:8px; border-radius:50%; flex:0 0 auto; }
+        .gender-dot.pria{ background:#4A6FA5; }
+        .gender-dot.wanita{ background:#B5628A; }
+
+        .pill{
+            display:inline-block;
+            font-size:11.5px;
+            font-weight:600;
+            padding:4px 10px;
+            border-radius:999px;
+            background:var(--forest-tint);
+            color:var(--forest);
+            white-space:nowrap;
+        }
+
+        .action-btn{
+            width:32px; height:32px;
+            border-radius:7px;
+            border:1px solid var(--line);
+            background:#fff;
+            display:inline-flex; align-items:center; justify-content:center;
+            font-size:12.5px;
+            margin-right:6px;
+            transition:all .12s ease;
+        }
+        .action-btn.edit{ color:var(--gold-deep); }
+        .action-btn.edit:hover{ background:#FBF3DF; border-color:var(--gold); }
+        .action-btn.delete{ color:var(--clay); }
+        .action-btn.delete:hover{ background:var(--clay-tint); border-color:var(--clay); }
+
+        /* DataTables controls restyle */
+        .dataTables_wrapper .dataTables_filter input,
+        .dataTables_wrapper .dataTables_length select{
+            border:1px solid var(--line);
+            border-radius:6px;
+            padding:6px 10px;
+            font-size:13px;
+        }
+        .dataTables_wrapper .dataTables_filter input:focus,
+        .dataTables_wrapper .dataTables_length select:focus{
+            outline:none;
+            border-color:var(--gold);
+            box-shadow:0 0 0 3px rgba(198,154,59,0.15);
+        }
+        .dataTables_wrapper .dataTables_info,
+        .dataTables_wrapper .dataTables_length,
+        .dataTables_wrapper .dataTables_filter label{
+            color:var(--slate);
+            font-size:12.5px;
+            padding-top:16px;
+        }
+        .dataTables_wrapper .dataTables_paginate .paginate_button{
+            border-radius:6px !important;
+            font-size:12.5px;
+        }
+        .dataTables_wrapper .dataTables_paginate .paginate_button.current{
+            background:var(--ink) !important;
+            border-color:var(--ink) !important;
+            color:#fff !important;
+        }
+
+        /* ---------- Modals ---------- */
+        .modal-content{
+            border:none;
+            border-radius:12px;
+            overflow:hidden;
+            box-shadow:0 30px 60px -20px rgba(15,22,38,0.45);
+        }
+        .modal-header{
+            background:var(--ink);
+            border-bottom:3px solid var(--gold);
+            padding:20px 24px;
+        }
+        .modal-title{
+            font-family:'Fraunces', serif;
+            color:#F7F5EF;
+            font-weight:600;
+            font-size:19px;
+        }
+        .modal-header .close{
+            color:#F7F5EF;
+            opacity:0.7;
+            text-shadow:none;
+        }
+        .modal-header .close:hover{ opacity:1; color:var(--gold); }
+        .modal-body{ padding:24px; background:#FFFEFB; }
+
+        .form-group label{
+            font-size:12px;
+            font-weight:600;
+            text-transform:uppercase;
+            letter-spacing:0.05em;
+            color:var(--slate);
+            margin-bottom:6px;
+        }
+        .form-control{
+            border:1px solid var(--line);
+            border-radius:7px;
+            padding:10px 12px;
+            font-size:14px;
+            height:auto;
+        }
+        .form-control:focus{
+            border-color:var(--gold);
+            box-shadow:0 0 0 3px rgba(198,154,59,0.15);
+        }
+
+        .modal .btn-gold{ width:100%; margin-top:6px; padding:11px; }
+
+        /* ---------- Toast ---------- */
+        #toastStack{
+            position:fixed;
+            top:20px; right:20px;
+            z-index:2000;
+            display:flex; flex-direction:column; gap:10px;
+        }
+        .toast-msg{
+            min-width:260px;
+            max-width:340px;
+            background:var(--ink);
+            color:#F7F5EF;
+            border-left:4px solid var(--clay);
+            border-radius:8px;
+            padding:12px 16px;
+            font-size:13.5px;
+            box-shadow:0 12px 28px -10px rgba(0,0,0,0.4);
+            animation:slideIn .25s ease both;
+        }
+        .toast-msg.success{ border-left-color:var(--forest); }
+        @keyframes slideIn{
+            from{ opacity:0; transform:translateX(20px); }
+            to{ opacity:1; transform:translateX(0); }
+        }
+
+        hr{ display:none; }
+    </style>
 </head>
 <body>
-<div class="container">
-    <h2 class="mt-5">Manajemen Mahasiswa</h2> <br>
-    <div class="d-flex justify-content-between mb-3">
-        <button class="btn btn-primary" data-toggle="modal" data-target="#addMahasiswaModal"><i class="fas fa-plus"></i> Tambah Mahasiswa</button>
-        <button class="btn btn-outline-danger" onclick="window.location.href='/logout'"><i class="fas fa-sign-out"></i> Keluar</button>
+
+<div id="toastStack"></div>
+
+<header class="masthead">
+    <div class="masthead-inner">
+        <div class="brand">
+            <div class="brand-seal">M</div>
+            <div class="brand-text">
+                <h1>Manajemen Mahasiswa</h1>
+                <p>Direktori &amp; Administrasi Data Mahasiswa Universitas Spring Boot</p>
+            </div>
+        </div>
+        <div class="header-actions">
+            <div class="stat-chip">
+                <span class="num" id="totalCount">&mdash;</span>
+                <span class="label">Terdaftar</span>
+            </div>
+            <button class="btn-ghost-gold" onclick="window.location.href='/logout'">
+                <i class="fas fa-sign-out"></i>&nbsp; Keluar
+            </button>
+        </div>
     </div>
-    <hr> <br>
-    <table id="mahasiswaTable" class="display" style="width:100%">
-        <thead>
-        <tr>
-            <th>No</th>
-            <th>NIM</th>
-            <th>Nama Lengkap</th>
-            <th>Kontak</th>
-            <th>Alamat</th>
-            <th>Jenis Kelamin</th>
-            <th>Fakultas</th>
-            <th>Jurusan</th>
-            <th>Aksi</th>
-        </tr>
-        </thead>
-    </table>
+</header>
+
+<div class="container">
+
+    <div class="toolbar">
+        <h2>Daftar Mahasiswa <span>Kelola, cari, dan perbarui data mahasiswa terdaftar</span></h2>
+        <button class="btn btn-gold" data-toggle="modal" data-target="#addMahasiswaModal">
+            <i class="fas fa-plus"></i>&nbsp; Tambah Mahasiswa
+        </button>
+    </div>
+
+    <div class="ledger-card">
+        <table id="mahasiswaTable" class="display" style="width:100%">
+            <thead>
+            <tr>
+                <th>No</th>
+                <th>NIM</th>
+                <th>Nama Lengkap</th>
+                <th>Kontak</th>
+                <th>Alamat</th>
+                <th>Jenis Kelamin</th>
+                <th>Fakultas</th>
+                <th>Jurusan</th>
+                <th>Aksi</th>
+            </tr>
+            </thead>
+        </table>
+    </div>
 </div>
 
 <!-- Modal Tambah Mahasiswa -->
@@ -47,42 +428,42 @@
             <div class="modal-body">
                 <form id="mahasiswaForm">
                     <div class="form-group">
-                        <label for="mahasiswaNim">NIM:</label>
-                        <input type="text" class="form-control" id="mahasiswaNim" name="mahasiswaNim" placeholder="NIM" required>
+                        <label for="mahasiswaNim">NIM</label>
+                        <input type="text" class="form-control" id="mahasiswaNim" name="mahasiswaNim" placeholder="Contoh: 21102001" required>
                     </div>
                     <div class="form-group">
-                        <label for="mahasiswaName">Nama Lengkap:</label>
-                        <input type="text" class="form-control" id="mahasiswaName" name="mahasiswaName" placeholder="Nama Lengkap" required>
+                        <label for="mahasiswaName">Nama Lengkap</label>
+                        <input type="text" class="form-control" id="mahasiswaName" name="mahasiswaName" placeholder="Nama lengkap mahasiswa" required>
                     </div>
                     <div class="form-group">
-                        <label for="mahasiswaContactNumber">Kontak:</label>
-                        <input type="text" class="form-control" id="mahasiswaContactNumber" name="mahasiswaContactNumber" placeholder="Kontak" required>
+                        <label for="mahasiswaContactNumber">Kontak</label>
+                        <input type="text" class="form-control" id="mahasiswaContactNumber" name="mahasiswaContactNumber" placeholder="Nomor telepon" required>
                     </div>
                     <div class="form-group">
-                        <label for="mahasiswaAddress">Alamat:</label>
-                        <input type="text" class="form-control" id="mahasiswaAddress" name="mahasiswaAddress" placeholder="Alamat" required>
+                        <label for="mahasiswaAddress">Alamat</label>
+                        <input type="text" class="form-control" id="mahasiswaAddress" name="mahasiswaAddress" placeholder="Alamat domisili" required>
                     </div>
                     <div class="form-group">
-                        <label for="mahasiswaGender">Jenis Kelamin:</label>
+                        <label for="mahasiswaGender">Jenis Kelamin</label>
                         <select class="form-control" id="mahasiswaGender" name="mahasiswaGender" required>
-                            <option value="" disabled selected>Pilih Jenis Kelamin</option>
+                            <option value="" disabled selected>Pilih jenis kelamin</option>
                             <option value="Laki-laki">Laki-laki</option>
                             <option value="Perempuan">Perempuan</option>
                         </select>
                     </div>
                     <div class="form-group">
-                        <label for="mahasiswaFaculty">Fakultas:</label>
+                        <label for="mahasiswaFaculty">Fakultas</label>
                         <select class="form-control" id="mahasiswaFaculty" name="mahasiswaFaculty" required>
                             <!-- Fakultas options akan diisi di sini -->
                         </select>
                     </div>
                     <div class="form-group">
-                        <label for="mahasiswaMajor">Jurusan:</label>
+                        <label for="mahasiswaMajor">Jurusan</label>
                         <select class="form-control" id="mahasiswaMajor" name="mahasiswaMajor" required>
                             <!-- Jurusan options akan diisi di sini -->
                         </select>
                     </div>
-                    <button type="submit" class="btn btn-primary">Simpan</button>
+                    <button type="submit" class="btn btn-gold">Simpan Mahasiswa</button>
                 </form>
             </div>
         </div>
@@ -101,42 +482,42 @@
                 <form id="editMahasiswaForm">
                     <input type="hidden" id="editMahasiswaId" name="mahasiswaId">
                     <div class="form-group">
-                        <label for="editMahasiswaNim">NIM:</label>
+                        <label for="editMahasiswaNim">NIM</label>
                         <input type="text" class="form-control" id="editMahasiswaNim" name="mahasiswaNim" placeholder="NIM" required>
                     </div>
                     <div class="form-group">
-                        <label for="editMahasiswaName">Nama Lengkap:</label>
+                        <label for="editMahasiswaName">Nama Lengkap</label>
                         <input type="text" class="form-control" id="editMahasiswaName" name="mahasiswaName" placeholder="Nama Lengkap" required>
                     </div>
                     <div class="form-group">
-                        <label for="editMahasiswaContactNumber">Kontak:</label>
+                        <label for="editMahasiswaContactNumber">Kontak</label>
                         <input type="text" class="form-control" id="editMahasiswaContactNumber" name="mahasiswaContactNumber" placeholder="Kontak" required>
                     </div>
                     <div class="form-group">
-                        <label for="editMahasiswaAddress">Alamat:</label>
+                        <label for="editMahasiswaAddress">Alamat</label>
                         <input type="text" class="form-control" id="editMahasiswaAddress" name="mahasiswaAddress" placeholder="Alamat" required>
                     </div>
                     <div class="form-group">
-                        <label for="editMahasiswaGender">Jenis Kelamin:</label>
+                        <label for="editMahasiswaGender">Jenis Kelamin</label>
                         <select class="form-control" id="editMahasiswaGender" name="mahasiswaGender" required>
-                            <option value="" disabled selected>Pilih Jenis Kelamin</option>
+                            <option value="" disabled selected>Pilih jenis kelamin</option>
                             <option value="Laki-laki">Laki-laki</option>
                             <option value="Perempuan">Perempuan</option>
                         </select>
                     </div>
                     <div class="form-group">
-                        <label for="editMahasiswaFaculty">Fakultas:</label>
+                        <label for="editMahasiswaFaculty">Fakultas</label>
                         <select class="form-control" id="editMahasiswaFaculty" name="mahasiswaFaculty" required>
                             <!-- Fakultas options akan diisi di sini -->
                         </select>
                     </div>
                     <div class="form-group">
-                        <label for="editMahasiswaMajor">Jurusan:</label>
+                        <label for="editMahasiswaMajor">Jurusan</label>
                         <select class="form-control" id="editMahasiswaMajor" name="mahasiswaMajor" required>
                             <!-- Jurusan options akan diisi di sini -->
                         </select>
                     </div>
-                    <button type="submit" class="btn btn-primary">Simpan</button>
+                    <button type="submit" class="btn btn-gold">Simpan Perubahan</button>
                 </form>
             </div>
         </div>
@@ -145,6 +526,12 @@
 
 <script>
     let fakultasJurusan = [];
+
+    function showToast(message, type) {
+        const $toast = $(`<div class="toast-msg ${type === 'success' ? 'success' : ''}">${message}</div>`);
+        $('#toastStack').append($toast);
+        setTimeout(() => { $toast.fadeOut(200, () => $toast.remove()); }, 3200);
+    }
 
     // Fetching fakultas and jurusan from jurusan.json
     $.getJSON('/jurusan.json', function(data) {
@@ -156,7 +543,7 @@
         $('#mahasiswaFaculty').html(fakultasOptions);
         $('#editMahasiswaFaculty').html(fakultasOptions);
     }).fail(function() {
-        alert('Failed to load jurusan.json');
+        showToast('Gagal memuat data fakultas & jurusan.', 'error');
     });
 
     // Populate jurusan options based on selected fakultas
@@ -176,12 +563,21 @@
         }
     });
 
+    function genderTag(gender) {
+        const cls = gender === 'Perempuan' ? 'wanita' : 'pria';
+        return `<span class="gender-tag"><span class="gender-dot ${cls}"></span>${gender}</span>`;
+    }
+
     // Fetch Mahasiswa data and populate the table
     function fetchMahasiswa() {
         $.ajax({
             url: '/get/mahasiswa',
             method: 'GET',
             success: function(data) {
+                $('#totalCount').text(Array.isArray(data) ? data.length : 0);
+                if ($.fn.DataTable.isDataTable('#mahasiswaTable')) {
+                    $('#mahasiswaTable').DataTable().destroy();
+                }
                 $('#mahasiswaTable').DataTable({
                     data: data,
                     columns: [
@@ -191,47 +587,64 @@
                                 return meta.row + 1;
                             }
                         },
-                        { data: 'mahasiswaNIM' },
-                        { data: 'mahasiswaName' },
+                        {
+                            data: 'mahasiswaNIM',
+                            render: function(data) { return `<span class="nim-badge">${data}</span>`; }
+                        },
+                        {
+                            data: 'mahasiswaName',
+                            render: function(data) { return `<span class="name-cell">${data}</span>`; }
+                        },
                         { data: 'mahasiswaContactNumber' },
                         { data: 'mahasiswaAddress' },
-                        { data: 'mahasiswaGender' },
-                        { data: 'mahasiswaFaculty' },
-                        { data: 'mahasiswaMajor' },
+                        {
+                            data: 'mahasiswaGender',
+                            render: function(data) { return genderTag(data); }
+                        },
+                        {
+                            data: 'mahasiswaFaculty',
+                            render: function(data) { return `<span class="pill">${data}</span>`; }
+                        },
+                        {
+                            data: 'mahasiswaMajor',
+                            render: function(data) { return `<span class="pill">${data}</span>`; }
+                        },
                         {
                             data: null,
+                            orderable: false,
                             render: function(data, type, row) {
                                 return `
-                                    <button class="btn btn-info btn-sm btn-block" onclick="editMahasiswa(${row.mahasiswaId})">
-                                      <i class="fas fa-edit"></i>
+                                    <button class="action-btn edit" title="Edit" onclick="editMahasiswa(${row.mahasiswaId})">
+                                      <i class="fas fa-pen"></i>
                                     </button>
-                                    <button class="btn btn-danger btn-sm btn-block" onclick="deleteMahasiswa(${row.mahasiswaId})">
+                                    <button class="action-btn delete" title="Hapus" onclick="deleteMahasiswa(${row.mahasiswaId})">
                                       <i class="fas fa-trash"></i>
                                     </button>
                                 `;
                             }
                         }
                     ],
-                    // Disable ordering on the first column (No)
                     columnDefs: [
                         { "orderable": false, "targets": 0 }
                     ],
-                     // Row callback to update row number
                     rowCallback: function(row, data, index) {
-                        // Get current page info
                         var info = this.api().page.info();
-                        // Calculate row index based on page and page length
-                        var pageStart = info.start;
-                        var pageLength = info.length;
-                        var currentIndex = pageStart + index + 1;
-                        // Update the first column in the current row
+                        var currentIndex = info.start + index + 1;
                         $('td:eq(0)', row).html(currentIndex);
+                    },
+                    language: {
+                        search: "Cari:",
+                        lengthMenu: "Tampilkan _MENU_ data",
+                        info: "Menampilkan _START_ - _END_ dari _TOTAL_ mahasiswa",
+                        infoEmpty: "Tidak ada data mahasiswa",
+                        zeroRecords: "Data mahasiswa tidak ditemukan",
+                        paginate: { previous: "Sebelumnya", next: "Berikutnya" }
                     },
                     destroy: true
                 });
             },
             error: function() {
-                alert('Failed to fetch mahasiswa data');
+                showToast('Gagal memuat data mahasiswa.', 'error');
             }
         });
     }
@@ -256,14 +669,15 @@
             data: JSON.stringify(mahasiswaData),
             success: function() {
                 $('#addMahasiswaModal').modal('hide');
+                $('#mahasiswaForm')[0].reset();
+                showToast('Mahasiswa berhasil ditambahkan.', 'success');
                 fetchMahasiswa();
             },
             error: function() {
-                alert('Failed to save mahasiswa data');
+                showToast('Gagal menyimpan data mahasiswa.', 'error');
             }
         });
     });
-
 
     // Edit Mahasiswa
     function editMahasiswa(mahasiswaId) {
@@ -284,7 +698,7 @@
                 $('#editMahasiswaModal').modal('show');
             },
             error: function() {
-                alert('Failed to fetch mahasiswa data');
+                showToast('Gagal memuat data mahasiswa.', 'error');
             }
         });
     }
@@ -310,14 +724,14 @@
             data: JSON.stringify(mahasiswaData),
             success: function() {
                 $('#editMahasiswaModal').modal('hide');
+                showToast('Perubahan berhasil disimpan.', 'success');
                 fetchMahasiswa();
             },
             error: function() {
-                alert('Failed to update mahasiswa data');
+                showToast('Gagal memperbarui data mahasiswa.', 'error');
             }
         });
     });
-
 
     // Delete Mahasiswa
     function deleteMahasiswa(mahasiswaId) {
@@ -326,10 +740,11 @@
                 url: `/delete/mahasiswa/${mahasiswaId}`,
                 method: 'DELETE',
                 success: function() {
+                    showToast('Mahasiswa berhasil dihapus.', 'success');
                     fetchMahasiswa();
                 },
                 error: function() {
-                    alert('Failed to delete mahasiswa data');
+                    showToast('Gagal menghapus data mahasiswa.', 'error');
                 }
             });
         }
