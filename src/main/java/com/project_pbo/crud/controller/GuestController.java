@@ -33,9 +33,8 @@ public class GuestController {
         context.setAuthentication(guestAuth);
         SecurityContextHolder.setContext(context);
 
-        // Simpan context ke session, supaya request berikutnya (mis. GET /dashboard) tetap dianggap sudah login
         securityContextRepository.saveContext(context, request, response);
 
-        return "redirect:/dashboard";
+        return "redirect:/mahasiswa";
     }
 }
