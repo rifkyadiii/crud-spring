@@ -571,7 +571,7 @@
     // Fetch Mahasiswa data and populate the table
     function fetchMahasiswa() {
         $.ajax({
-            url: '/get/mahasiswa',
+            url: 'https://crud-spring-28tt.onrender.com/get/mahasiswa',
             method: 'GET',
             success: function(data) {
                 $('#totalCount').text(Array.isArray(data) ? data.length : 0);
@@ -663,7 +663,7 @@
         };
 
         $.ajax({
-            url: '/post/mahasiswa',
+            url: 'https://crud-spring-28tt.onrender.com/post/mahasiswa',
             method: 'POST',
             contentType: 'application/json',
             data: JSON.stringify(mahasiswaData),
@@ -682,7 +682,7 @@
     // Edit Mahasiswa
     function editMahasiswa(mahasiswaId) {
         $.ajax({
-            url: `/get/mahasiswa/${mahasiswaId}`,
+            url: `https://crud-spring-28tt.onrender.com/get/mahasiswa/${mahasiswaId}`,
             method: 'GET',
             success: function(mahasiswa) {
                 $('#editMahasiswaId').val(mahasiswa.mahasiswaId);
@@ -718,7 +718,7 @@
         };
 
         $.ajax({
-            url: '/update/mahasiswa',
+            url: 'https://crud-spring-28tt.onrender.com/update/mahasiswa',
             method: 'PUT',
             contentType: 'application/json',
             data: JSON.stringify(mahasiswaData),
@@ -737,7 +737,7 @@
     function deleteMahasiswa(mahasiswaId) {
         if (confirm('Apakah Anda yakin ingin menghapus mahasiswa ini?')) {
             $.ajax({
-                url: `/delete/mahasiswa/${mahasiswaId}`,
+                url: `https://crud-spring-28tt.onrender.com/delete/mahasiswa/${mahasiswaId}`,
                 method: 'DELETE',
                 success: function() {
                     showToast('Mahasiswa berhasil dihapus.', 'success');
