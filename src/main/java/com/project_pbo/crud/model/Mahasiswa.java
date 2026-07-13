@@ -6,7 +6,8 @@ import jakarta.persistence.*;
 @Table(name = "mahasiswa")
 public class Mahasiswa {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "mahasiswa_id")
     private Integer mahasiswaId;
     private String mahasiswaNim;
     private String mahasiswaName;
@@ -28,12 +29,12 @@ public class Mahasiswa {
         this.mahasiswaId = mahasiswaId;
     }
 
-    public String getMahasiswaNIM() {
+    public String getMahasiswaNim() {
         return mahasiswaNim;
     }
 
-    public void setMahasiswaNIM(String mahasiswaNIM) {
-        this.mahasiswaNim = mahasiswaNIM;
+    public void setMahasiswaNIM(String mahasiswaNim) {
+        this.mahasiswaNim = mahasiswaNim;
     }
 
     public String getMahasiswaName() {

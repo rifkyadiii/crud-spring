@@ -653,7 +653,7 @@
     $('#mahasiswaForm').on('submit', function(event) {
         event.preventDefault();
         let mahasiswaData = {
-            mahasiswaNIM: $('#mahasiswaNim').val(),
+            mahasiswaNim: $('#mahasiswaNim').val(),
             mahasiswaName: $('#mahasiswaName').val(),
             mahasiswaContactNumber: $('#mahasiswaContactNumber').val(),
             mahasiswaAddress: $('#mahasiswaAddress').val(),
@@ -686,7 +686,7 @@
             method: 'GET',
             success: function(mahasiswa) {
                 $('#editMahasiswaId').val(mahasiswa.mahasiswaId);
-                $('#editMahasiswaNim').val(mahasiswa.mahasiswaNIM);
+                $('#editMahasiswaNim').val(mahasiswa.mahasiswaNim);
                 $('#editMahasiswaName').val(mahasiswa.mahasiswaName);
                 $('#editMahasiswaContactNumber').val(mahasiswa.mahasiswaContactNumber);
                 $('#editMahasiswaAddress').val(mahasiswa.mahasiswaAddress);
